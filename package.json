@@ -1,7 +1,7 @@
 {
   "name": "skillmap",
   "version": "1.0.0",
-  "description": "",
+  "description": "Identify the road map for your next tech career.",
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon",
@@ -12,7 +12,7 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alireza Bonab <a.alidoost@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.3",
