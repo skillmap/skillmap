@@ -1,12 +1,14 @@
 {
   "name": "skillmap",
   "version": "1.0.0",
-  "description": "Identify the road map for your next tech career.",
+  "description": "My webpack project",
   "main": "index.js",
   "scripts": {
+    "start": " npm run build && node run start:prod",
     "start:dev": "nodemon",
-    "build": "webpack",
-    "start": "npm run build && node build/index.js",
+    "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/index.js",
+    "build": "npm run lint && npm run clean && tsc",
+    "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"
@@ -16,21 +18,14 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.3",
-    "@types/node": "^13.9.3",
+    "@types/node": "^13.9.5",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
-    "awesome-typescript-loader": "^5.2.1",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "eslint": "^6.8.0",
-    "html-webpack-plugin": "^4.0.3",
     "nodemon": "^2.0.2",
-    "terser-webpack-plugin": "^2.3.5",
     "ts-node": "^8.8.1",
-    "typescript": "^3.8.3",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
-    "workbox-webpack-plugin": "^5.1.2"
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "express": "^4.17.1"
