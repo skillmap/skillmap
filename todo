@@ -1,0 +1,21 @@
+Output format
+ /posts
+        [{
+            postId,
+            title,
+            description,
+            publishDate
+        }]
+
+/post/:postId
+        {
+            postId,
+            title,
+            description,
+            publishDate,
+            skills[{
+                skillId,
+                title,
+                description
+            }]
+        }
