@@ -8,7 +8,7 @@
     "allowJs": true,
     "outDir": "dist",
     "rootDir": "./src",
-    "declaration" : true,
+    "declaration": true,
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
@@ -19,11 +19,21 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "core/*": [
+        "./src/core/*"
+      ],
+      "data/*": [
+        "./src/data/*"
+      ],
+      "entrypoint/*": [
+        "./src/entrypoint/*"
+      ],
+      "config/*": [
+        "./src/config/*"
+      ],
     }
-  }
-  ,
-  "include": ["src/**/*.ts"]
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
 }
