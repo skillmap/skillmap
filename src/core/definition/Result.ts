@@ -1,14 +1,11 @@
-
-import UseCaseError from './UseCaseError';
-
 export default class Result<T> {
 
-    private value: T | undefined;
-    private error?: UseCaseError;
+    private value?: T;
+    private error?: T;
 
     public isError: boolean;
 
-    constructor(error: UseCaseError | undefined, value: T | undefined = undefined) {
+    constructor(error?: T, value?: T) {
         if (error) {
             this.isError = true;
             this.error = error;
@@ -25,14 +22,14 @@ export default class Result<T> {
         return this.value as T;
     }
 
-    public getError(): UseCaseError | undefined {
+    public getError(): T | undefined {
         if (this.isError) {
-            return this.error as UseCaseError;
+            return this.error as T;
         }
         return undefined;
     }
 
-    public static fail<T>(error: UseCaseError): Result<T> {
+    public static fail<T>(error: T): Result<T> {
         return new Result<T>(error);
     }
 
