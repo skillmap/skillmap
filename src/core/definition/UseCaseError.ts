@@ -4,10 +4,10 @@ export default class UseCaseError {
     public message: string;
 
     constructor(message: string) {
-        this.message = message;
+      this.message = message;
     }
 
     public errorType(): string {
-        return this.constructor.name.toUpperCase();
+      return this.constructor.name.toUpperCase();
     }
 }

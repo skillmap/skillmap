@@ -1,4 +1,4 @@
-import { Skill } from '.';
+import { Skill } from ".";
 
 export interface Post {
     postId: string;

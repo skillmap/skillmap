@@ -11,6 +11,19 @@
     ],
     "rules": {
         "no-console": 1,
-        "eol-last" : 2
+        "eol-last": 2,
+        "no-restricted-syntax": "off",
+        "indent": [
+            "error",
+            2
+        ],
+        "semi": "off",
+        "@typescript-eslint/semi": [
+            "error"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ]
     }
 }
