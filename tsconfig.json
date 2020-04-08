@@ -30,7 +30,7 @@
       ],
       "config/*": [
         "./src/config/*"
-      ],
+      ]
     }
   },
   "include": [

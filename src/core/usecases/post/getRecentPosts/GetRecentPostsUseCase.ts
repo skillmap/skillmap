@@ -3,20 +3,21 @@ import { GetRecentPostRequestDTO } from "core/usecases/post/getRecentPosts/GetRe
 import { GetRecentPostsResponseDTO } from "core/usecases/post/getRecentPosts/GetRecentPostsResponseDTO";
 import { Post } from "core/entities";
 import Result from "core/definition/Result";
-import { GetRecentPostsDataAdapter } from "core/usecases/post/getRecentPosts/GetRecentPostsDataAdapter";
+import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
 
 export default class GetRecentPostsUseCase implements UseCase<GetRecentPostRequestDTO, GetRecentPostsResponseDTO>{
 
-    private getRecentPostsDataAdapter: GetRecentPostsDataAdapter;
-    constructor(getRecentPostsDataAdapter: GetRecentPostsDataAdapter) {
-      this.getRecentPostsDataAdapter = getRecentPostsDataAdapter;
-    }
+  private getRecentPostsDataAdapter: PostDataAdapter;
 
-    execute(request: GetRecentPostRequestDTO): GetRecentPostsResponseDTO | Promise<GetRecentPostsResponseDTO> {
+  constructor(getRecentPostsDataAdapter: PostDataAdapter) {
+    this.getRecentPostsDataAdapter = getRecentPostsDataAdapter;
+  }
 
-      const posts: Post[] = this.getRecentPostsDataAdapter.getRecentPosts(request.page);
+  execute(request: GetRecentPostRequestDTO): GetRecentPostsResponseDTO | Promise<GetRecentPostsResponseDTO> {
 
-      return Result.ok<Post[]>(posts);
-    }
+    const posts: Post[] = this.getRecentPostsDataAdapter.getRecentPosts(request.page);
+
+    return Result.ok<Post[]>(posts);
+  }
 
 }

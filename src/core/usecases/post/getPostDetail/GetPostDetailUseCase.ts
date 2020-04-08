@@ -1,28 +1,33 @@
 import { GetPostDetailRequestDTO } from "core/usecases/post/getPostDetail/GetPostDetailRequestDTO";
 import { GetPostDetailResponseDTO } from "core/usecases/post/getPostDetail/GetPostDetailResponseDTO";
 import UseCase from "core/definition/UseCase";
-import { GetPostDetailDataAdapter } from "core/usecases/post/getPostDetail/GetPostDetailDataAdapter";
+import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
 import Result from "core/definition/Result";
-import { PostDetail } from "core/entities";
-import { PostNotFound } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
+import { PostNotFound, InvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
 
 export default class GetPostDetailUseCase implements UseCase<GetPostDetailRequestDTO, GetPostDetailResponseDTO>{
 
-    private getPostDetailDataAdapter: GetPostDetailDataAdapter;
+  private getPostDetailDataAdapter: PostDataAdapter;
 
-    constructor(getPostDetailDataAdapter: GetPostDetailDataAdapter) {
-      this.getPostDetailDataAdapter = getPostDetailDataAdapter;
+  constructor(getPostDetailDataAdapter: PostDataAdapter) {
+    this.getPostDetailDataAdapter = getPostDetailDataAdapter;
+  }
+
+
+  execute(request: GetPostDetailRequestDTO): GetPostDetailResponseDTO | Promise<GetPostDetailResponseDTO> {
+    if (!request || !request.postId) {
+      return Result.fail(new InvalidRequest(request));
     }
 
+    const { postId } = request;
 
-    execute(request: GetPostDetailRequestDTO): GetPostDetailResponseDTO | Promise<GetPostDetailResponseDTO> {
-      const { postId } = request;
-      const result = this.getPostDetailDataAdapter.getPostDetail(postId);
-      if (result) {
-        return Result.ok<PostDetail>(result);
-      } else {
-        return Result.fail<PostNotFound>(new PostNotFound(postId));
-      }
+    const result = this.getPostDetailDataAdapter.getPostDetail(postId);
+
+    if (result) {
+      return Result.ok(result);
+    } else {
+      return Result.fail(new PostNotFound(postId));
     }
+  }
 
 }

@@ -1,2 +1,6 @@
+import UseCase from "core/definition/UseCase";
 
-console.log("hello");
+
+export {
+  UseCase
+};
