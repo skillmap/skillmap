@@ -9,7 +9,7 @@ export class PostNotFound extends UseCaseError {
 
 }
 
-export class InvalidRequest extends UseCaseError {
+export class PostDetailInvalidRequest extends UseCaseError {
 
   constructor(requestPayload: unknown) {
     super(`request '${JSON.stringify(requestPayload)}' is not valid`);

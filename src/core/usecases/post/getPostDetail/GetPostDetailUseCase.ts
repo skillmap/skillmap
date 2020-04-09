@@ -3,7 +3,7 @@ import { GetPostDetailResponseDTO } from "core/usecases/post/getPostDetail/GetPo
 import UseCase from "core/definition/UseCase";
 import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
 import Result from "core/definition/Result";
-import { PostNotFound, InvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
+import { PostNotFound, PostDetailInvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
 
 export default class GetPostDetailUseCase implements UseCase<GetPostDetailRequestDTO, GetPostDetailResponseDTO>{
 
@@ -16,7 +16,7 @@ export default class GetPostDetailUseCase implements UseCase<GetPostDetailReques
 
   execute(request: GetPostDetailRequestDTO): GetPostDetailResponseDTO | Promise<GetPostDetailResponseDTO> {
     if (!request || !request.postId) {
-      return Result.fail(new InvalidRequest(request));
+      return Result.fail(new PostDetailInvalidRequest(request));
     }
 
     const { postId } = request;

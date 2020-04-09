@@ -1,52 +1,18 @@
 import GetPostDetailUseCase from "core/usecases/post/getPostDetail/GetPostDetailUseCase";
 import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
 import { Post, PostDetail } from "core/entities";
-import { PostNotFound, InvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
+import { PostNotFound, PostDetailInvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
 import { GetPostDetailRequestDTO } from "core/usecases/post/getPostDetail/GetPostDetailRequestDTO";
-
-let dataSource: PostDataAdapter;
-
-const samplePosts: Post[] = [];
-
-const samplePostDetails: PostDetail[] = [];
+import SamplePosts from "__fixtures__/Posts";
+import SamplePostDetails from "__fixtures__/PostDetails";
 
 let getPostDetailUseCase: GetPostDetailUseCase;
 
 beforeAll(() => {
-  samplePosts.push({
-    postId: "ABC_1",
-    description: "This is first post",
-    title: "post one",
-    publishDate: new Date()
-  });
 
-  samplePosts.push({
-    postId: "ABC_2",
-    description: "This is second post",
-    title: "post two",
-    publishDate: new Date()
-  });
-
-  samplePostDetails.push({
-    postId: "ABC_1",
-    description: "This is first post",
-    title: "post one",
-    publishDate: new Date(),
-    skills: []
-  });
-
-  samplePostDetails.push({
-    postId: "ABC_2",
-    description: "This is second post",
-    title: "post two",
-    publishDate: new Date(),
-    skills: []
-  });
-
-
-  dataSource = {
-    getRecentPosts: (): Post[] => samplePosts,
-    getPostDetail: (postId: string): PostDetail | undefined => samplePostDetails.find(p => p.postId == postId)
+  const dataSource: PostDataAdapter = {
+    getRecentPosts: (): Post[] => SamplePosts,
+    getPostDetail: (postId: string): PostDetail | undefined => SamplePostDetails.find(p => p.postId == postId)
   };
 
   getPostDetailUseCase = new GetPostDetailUseCase(dataSource);
@@ -59,12 +25,12 @@ describe("get post detail use case", () => {
     let invalidInput: unknown = {};
     let invalidCall = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
 
-    expect(invalidCall.getError()).toBeInstanceOf(InvalidRequest);
+    expect(invalidCall.getError()).toBeInstanceOf(PostDetailInvalidRequest);
 
     invalidInput = { postId: "" };
     invalidCall = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
 
-    expect(invalidCall.getError()).toBeInstanceOf(InvalidRequest);
+    expect(invalidCall.getError()).toBeInstanceOf(PostDetailInvalidRequest);
 
   });
 

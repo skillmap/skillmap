@@ -31,6 +31,10 @@
       "config/*": [
         "./src/config/*"
       ]
+      ,
+      "__fixtures__/*": [
+        "./src/__fixtures__/*"
+      ]
     }
   },
   "include": [

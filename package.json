@@ -10,6 +10,7 @@
     "build": "npm run lint && npm run clean && tsc",
     "clean": "rimraf dist",
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"
   },
