@@ -1,8 +1,8 @@
-import { PostDetail, Post } from "core/entities";
+import { PostDetail, Post, PaginatedData } from "core/entities";
 
 export interface PostDataAdapter {
 
-    getRecentPosts(page: number): Post[];
+    getRecentPosts(nextPageKey: string, seek: number): PaginatedData<Post> | undefined;
 
     getPostDetail(postId: string): PostDetail | undefined;
 

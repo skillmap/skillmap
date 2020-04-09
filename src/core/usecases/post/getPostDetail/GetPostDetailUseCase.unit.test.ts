@@ -1,9 +1,9 @@
 import GetPostDetailUseCase from "core/usecases/post/getPostDetail/GetPostDetailUseCase";
 import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
-import { Post, PostDetail } from "core/entities";
+import { Post, PostDetail, PaginatedData } from "core/entities";
 import { PostNotFound, PostDetailInvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
 import { GetPostDetailRequestDTO } from "core/usecases/post/getPostDetail/GetPostDetailRequestDTO";
-import SamplePosts from "__fixtures__/Posts";
+import SamplePaginatedPosts from "__fixtures__/PaginatedPosts";
 import SamplePostDetails from "__fixtures__/PostDetails";
 
 let getPostDetailUseCase: GetPostDetailUseCase;
@@ -11,42 +11,49 @@ let getPostDetailUseCase: GetPostDetailUseCase;
 beforeAll(() => {
 
   const dataSource: PostDataAdapter = {
-    getRecentPosts: (): Post[] => SamplePosts,
+    getRecentPosts: (nextPageKey: string): PaginatedData<Post>| undefined  => SamplePaginatedPosts.find(item => item.pageInfo.currentPageKey === nextPageKey),
     getPostDetail: (postId: string): PostDetail | undefined => SamplePostDetails.find(p => p.postId == postId)
   };
 
   getPostDetailUseCase = new GetPostDetailUseCase(dataSource);
+
 });
 
-describe("get post detail use case", () => {
+describe("get post detail usecase", () => {
 
-  test("invalid request", async () => {
+  it("invalid request", async () => {
 
     let invalidInput: unknown = {};
-    let invalidCall = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
+    let result = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
 
-    expect(invalidCall.getError()).toBeInstanceOf(PostDetailInvalidRequest);
+    expect(result.getError()).toBeInstanceOf(PostDetailInvalidRequest);
 
     invalidInput = { postId: "" };
-    invalidCall = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
+    result = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
 
-    expect(invalidCall.getError()).toBeInstanceOf(PostDetailInvalidRequest);
+    expect(result.getError()).toBeInstanceOf(PostDetailInvalidRequest);
+
+    expect((result.getError() as PostDetailInvalidRequest).message).toEqual("request '{\"postId\":\"\"}' is not valid");
+    expect((result.getError() as PostDetailInvalidRequest).getErrorType()).toEqual("POSTDETAILINVALIDREQUEST");
 
   });
 
-  test("post not found", async () => {
+  it("post not found", async () => {
     const invalidInput: unknown = { postId: "-1" };
-    const invalidCall = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
+    const result = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
 
-    expect(invalidCall.getError()).toBeInstanceOf(PostNotFound);
+    expect(result.getError()).toBeInstanceOf(PostNotFound);
+
+    expect((result.getError() as PostNotFound).message).toEqual("postId '-1' not found");
+    expect((result.getError() as PostNotFound).getErrorType()).toEqual("POSTNOTFOUND");
   });
 
-  test("on error the usecase get value should throw error", async () => {
+  it("on error, result.getValue() throws error", async () => {
     const invalidInput: unknown = { postId: "-1" };
-    const invalidCall = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
+    const result = await getPostDetailUseCase.execute(invalidInput as GetPostDetailRequestDTO);
 
     expect(() => {
-      invalidCall.getValue();
+      result.getValue();
     }).toThrowError("Can't get the value of an error result. Use 'errorValue' instead.");
   });
 

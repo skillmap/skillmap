@@ -1,4 +1,4 @@
 
 export interface GetRecentPostRequestDTO {
-    page: number;
+    nextPageKey: string;
 }

@@ -7,7 +7,7 @@ export default class UseCaseError {
       this.message = message;
     }
 
-    public errorType(): string {
+    public getErrorType(): string {
       return this.constructor.name.toUpperCase();
     }
 }
