@@ -1,6 +1,1 @@
-import UseCase from "core/definition/UseCase";
-
-
-export {
-  UseCase
-};
+console.log("hello world!");

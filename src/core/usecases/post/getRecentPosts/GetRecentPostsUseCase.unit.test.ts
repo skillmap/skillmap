@@ -1,4 +1,4 @@
-import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
+import PostDataAdapter from "core/usecases/post/PostDataAdapter";
 import { Post, PostDetail, PaginatedData } from "core/entities";
 import SamplePaginatedPosts from "__fixtures__/PaginatedPosts";
 import SamplePostDetails from "__fixtures__/PostDetails";
@@ -10,7 +10,7 @@ let getRecentPostsUseCase: GetRecentPostsUseCase;
 beforeAll(() => {
 
   const dataSource: PostDataAdapter = {
-    getRecentPosts: (nextPageKey: string): PaginatedData<Post> | undefined => SamplePaginatedPosts.find(item => item.pageInfo.currentPageKey === nextPageKey),
+    getRecentPosts: (key: number): PaginatedData<Post, number> | undefined => SamplePaginatedPosts.find(item => item.pageInfo.currentPageKey === key),
     getPostDetail: (postId: string): PostDetail | undefined => SamplePostDetails.find(p => p.postId == postId)
   };
 
@@ -34,13 +34,13 @@ describe("get recent post usecase", () => {
 
 
   it("next page not found", async () => {
-    const invalidInput = { pageKey: "Z" };
+    const invalidInput = { pageKey: 100 };
     const result = await getRecentPostsUseCase.execute(invalidInput);
 
     expect(result.getError()).toBeInstanceOf(NextPageNotFound);
 
 
-    expect((result.getError() as NextPageNotFound).message).toEqual("posts for page key 'Z' not found");
+    expect((result.getError() as NextPageNotFound).message).toEqual("posts for page key '100' not found");
     expect((result.getError() as NextPageNotFound).getErrorType()).toEqual("NEXTPAGENOTFOUND");
   });
 
@@ -55,16 +55,16 @@ describe("get recent post usecase", () => {
 
   it("traverse pages", async () => {
 
-    const request: GetRecentPostRequestDTO = { pageKey: "A" };
+    const request: GetRecentPostRequestDTO = { pageKey: 1 };
     const result = await getRecentPostsUseCase.execute(request);
 
-    expect((result.getValue() as PaginatedData<Post>).pageInfo).toEqual({ nextPageKey: "B", currentPageKey: "A", count: 3 });
+    expect((result.getValue() as PaginatedData<Post, number>).pageInfo).toEqual({ nextPageKey: 2, currentPageKey: 1, count: 3 });
 
     const nextPageRequest: GetRecentPostRequestDTO = {
-      pageKey: (result.getValue() as PaginatedData<Post>).pageInfo.nextPageKey
+      pageKey: (result.getValue() as PaginatedData<Post, number>).pageInfo.nextPageKey
     };
     const nextPageResult = await getRecentPostsUseCase.execute(nextPageRequest);
-    expect((nextPageResult.getValue() as PaginatedData<Post>).pageInfo).toEqual({ nextPageKey: "C", currentPageKey: "B", count: 3 });
+    expect((nextPageResult.getValue() as PaginatedData<Post, number>).pageInfo).toEqual({ nextPageKey: 3, currentPageKey: 2, count: 3 });
 
   });
 

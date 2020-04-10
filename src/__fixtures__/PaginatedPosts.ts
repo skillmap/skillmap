@@ -1,25 +1,25 @@
 import Posts from "./Posts";
 import { PaginatedData, Post } from "core/entities";
 
-const paginatedPosts: PaginatedData<Post>[] = [
+const paginatedPosts: PaginatedData<Post, number>[] = [
   {
     pageInfo: { 
-      currentPageKey : "A",
-      nextPageKey: "B",
+      currentPageKey : 1,
+      nextPageKey: 2,
       count: 3 
     },
     data: Posts
   }, {
     pageInfo: { 
-      currentPageKey : "B",
-      nextPageKey: "C",
+      currentPageKey : 2,
+      nextPageKey: 3,
       count: 3 
     },
     data: Posts
   }, {
     pageInfo: { 
-      currentPageKey : "C",
-      nextPageKey: "",
+      currentPageKey : 3,
+      nextPageKey: -1,
       count: 3 
     },
     data: Posts

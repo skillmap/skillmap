@@ -3,7 +3,7 @@ import UseCaseError from "core/definition/UseCaseError";
 
 export class NextPageNotFound extends UseCaseError {
 
-  constructor(nextPageKey: string) {
+  constructor(nextPageKey: number) {
     super(`posts for page key '${nextPageKey}' not found`);
   }
 

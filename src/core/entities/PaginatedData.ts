@@ -1,7 +1,7 @@
-export default interface PaginatedData<T> {
+export default interface PaginatedData<T , I> {
     pageInfo: {
-        currentPageKey: string;
-        nextPageKey: string;
+        currentPageKey: I;
+        nextPageKey: I;
         count: number;
     };
     data: T[];

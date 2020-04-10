@@ -2,21 +2,21 @@ import { Post } from "core/entities";
 
 const samplePosts: Post[] = [
   {
-    postId: "ABC_1",
-    description: "This is first post",
-    title: "post one",
+    postId: "e9109c9c",
+    title: "React Frontend Developer",
+    description: "set of skills to become a frontend developer",
     publishDate: new Date()
   },
   {
-    postId: "ABC_2",
-    description: "This is second post",
-    title: "post two",
+    postId: "398f0c8f",
+    title: "Javascript Backend Developer",
+    description: "Skills required for Javascript Backend Developer",
     publishDate: new Date()
   },
   {
-    postId: "ABC_3",
-    description: "This is third post",
-    title: "post three",
+    postId: "5a38a0db",
+    description: "DevOps engineer skill set",
+    title: "DevOps Engineer",
     publishDate: new Date()
   }
 ];

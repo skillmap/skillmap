@@ -1,17 +1,18 @@
 import GetPostDetailUseCase from "core/usecases/post/getPostDetail/GetPostDetailUseCase";
-import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
-import { Post, PostDetail, PaginatedData } from "core/entities";
+import PostDataAdapter from "core/usecases/post/PostDataAdapter";
+import { Post, PaginatedData, PostDetail } from "core/entities";
 import { PostNotFound, PostDetailInvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
 import { GetPostDetailRequestDTO } from "core/usecases/post/getPostDetail/GetPostDetailRequestDTO";
 import SamplePaginatedPosts from "__fixtures__/PaginatedPosts";
 import SamplePostDetails from "__fixtures__/PostDetails";
+import SampleSkills from "__fixtures__/Skills";
 
 let getPostDetailUseCase: GetPostDetailUseCase;
 
 beforeAll(() => {
 
   const dataSource: PostDataAdapter = {
-    getRecentPosts: (nextPageKey: string): PaginatedData<Post>| undefined  => SamplePaginatedPosts.find(item => item.pageInfo.currentPageKey === nextPageKey),
+    getRecentPosts: (key: number): PaginatedData<Post, number> | undefined => SamplePaginatedPosts.find(item => item.pageInfo.currentPageKey === key),
     getPostDetail: (postId: string): PostDetail | undefined => SamplePostDetails.find(p => p.postId == postId)
   };
 
@@ -55,6 +56,19 @@ describe("get post detail usecase", () => {
     expect(() => {
       result.getValue();
     }).toThrowError("Can't get the value of an error result. Use 'errorValue' instead.");
+  });
+
+
+  it("get post detail", async () => {
+    const input: GetPostDetailRequestDTO = { postId: "e9109c9c" };
+    const result = await getPostDetailUseCase.execute(input);
+
+    expect((result.getValue() as PostDetail).postId).toEqual(input.postId);
+    expect((result.getValue() as PostDetail).title).toEqual("React Frontend Developer");
+    expect((result.getValue() as PostDetail).description).toEqual("set of skills to become a frontend developer");
+    expect((result.getValue() as PostDetail).description).toEqual("set of skills to become a frontend developer");
+    expect((result.getValue() as PostDetail).skills).toEqual(SampleSkills.filter(s => s.postId === input.postId));
+
   });
 
 });

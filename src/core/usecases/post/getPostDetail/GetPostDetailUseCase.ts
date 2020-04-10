@@ -1,7 +1,7 @@
 import { GetPostDetailRequestDTO } from "core/usecases/post/getPostDetail/GetPostDetailRequestDTO";
 import { GetPostDetailResponseDTO } from "core/usecases/post/getPostDetail/GetPostDetailResponseDTO";
 import UseCase from "core/definition/UseCase";
-import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
+import PostDataAdapter  from "core/usecases/post/PostDataAdapter";
 import Result from "core/definition/Result";
 import { PostNotFound, PostDetailInvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
 

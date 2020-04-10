@@ -3,7 +3,7 @@ import { GetRecentPostRequestDTO } from "core/usecases/post/getRecentPosts/GetRe
 import { GetRecentPostsResponseDTO } from "core/usecases/post/getRecentPosts/GetRecentPostsResponseDTO";
 import { Post, PaginatedData } from "core/entities";
 import Result from "core/definition/Result";
-import { PostDataAdapter } from "core/usecases/post/PostDataAdapter";
+import PostDataAdapter from "core/usecases/post/PostDataAdapter";
 import { GetRecentPostInvalidRequest as GetRecentPostInvalidRequest, NextPageNotFound } from "core/usecases/post/getRecentPosts/GetRecentPostsErrors";
 
 const PAGE_SEEK_COUNT = 10;
@@ -25,7 +25,7 @@ export default class GetRecentPostsUseCase implements UseCase<GetRecentPostReque
     const posts = this.getRecentPostsDataAdapter.getRecentPosts(request.pageKey, PAGE_SEEK_COUNT);
 
     if (posts) {
-      return Result.ok<PaginatedData<Post>>(posts);
+      return Result.ok<PaginatedData<Post, number>>(posts);
     } else {
       return Result.fail(new NextPageNotFound(request.pageKey));
     }
