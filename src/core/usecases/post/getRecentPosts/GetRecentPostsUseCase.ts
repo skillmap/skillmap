@@ -18,16 +18,16 @@ export default class GetRecentPostsUseCase implements UseCase<GetRecentPostReque
 
   execute(request: GetRecentPostRequestDTO): GetRecentPostsResponseDTO | Promise<GetRecentPostsResponseDTO> {
 
-    if (!request || !request.nextPageKey) {
+    if (!request || !request.pageKey) {
       return Result.fail(new GetRecentPostInvalidRequest(request));
     }
 
-    const posts = this.getRecentPostsDataAdapter.getRecentPosts(request.nextPageKey, PAGE_SEEK_COUNT);
+    const posts = this.getRecentPostsDataAdapter.getRecentPosts(request.pageKey, PAGE_SEEK_COUNT);
 
     if (posts) {
       return Result.ok<PaginatedData<Post>>(posts);
     } else {
-      return Result.fail(new NextPageNotFound(request.nextPageKey));
+      return Result.fail(new NextPageNotFound(request.pageKey));
     }
   }
 

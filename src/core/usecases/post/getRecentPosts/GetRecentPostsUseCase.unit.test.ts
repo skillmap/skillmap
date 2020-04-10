@@ -34,7 +34,7 @@ describe("get recent post usecase", () => {
 
 
   it("next page not found", async () => {
-    const invalidInput = { nextPageKey: "Z" };
+    const invalidInput = { pageKey: "Z" };
     const result = await getRecentPostsUseCase.execute(invalidInput);
 
     expect(result.getError()).toBeInstanceOf(NextPageNotFound);
@@ -55,13 +55,13 @@ describe("get recent post usecase", () => {
 
   it("traverse pages", async () => {
 
-    const request: GetRecentPostRequestDTO = { nextPageKey: "A" };
+    const request: GetRecentPostRequestDTO = { pageKey: "A" };
     const result = await getRecentPostsUseCase.execute(request);
 
     expect((result.getValue() as PaginatedData<Post>).pageInfo).toEqual({ nextPageKey: "B", currentPageKey: "A", count: 3 });
 
     const nextPageRequest: GetRecentPostRequestDTO = {
-      nextPageKey: (result.getValue() as PaginatedData<Post>).pageInfo.nextPageKey
+      pageKey: (result.getValue() as PaginatedData<Post>).pageInfo.nextPageKey
     };
     const nextPageResult = await getRecentPostsUseCase.execute(nextPageRequest);
     expect((nextPageResult.getValue() as PaginatedData<Post>).pageInfo).toEqual({ nextPageKey: "C", currentPageKey: "B", count: 3 });
