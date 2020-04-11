@@ -1,15 +1,15 @@
-import { GetPostDetailRequestDTO } from "core/usecases/post/getPostDetail/GetPostDetailRequestDTO";
-import { GetPostDetailResponseDTO } from "core/usecases/post/getPostDetail/GetPostDetailResponseDTO";
+import GetPostDetailRequestDTO from "core/usecases/post/getPostDetail/GetPostDetailRequestDTO";
+import GetPostDetailResponseDTO from "core/usecases/post/getPostDetail/GetPostDetailResponseDTO";
 import UseCase from "core/definition/UseCase";
-import PostDataAdapter  from "core/usecases/post/PostDataAdapter";
+import PostEntityGateway from "core/usecases/post/PostEntityGateway";
 import Result from "core/definition/Result";
 import { PostNotFound, PostDetailInvalidRequest } from "core/usecases/post/getPostDetail/GetPostDetailErrors";
 
-export default class GetPostDetailUseCase implements UseCase<GetPostDetailRequestDTO, GetPostDetailResponseDTO>{
+class GetPostDetailUseCase implements UseCase<GetPostDetailRequestDTO, GetPostDetailResponseDTO>{
 
-  private getPostDetailDataAdapter: PostDataAdapter;
+  private getPostDetailDataAdapter: PostEntityGateway;
 
-  constructor(getPostDetailDataAdapter: PostDataAdapter) {
+  constructor(getPostDetailDataAdapter: PostEntityGateway) {
     this.getPostDetailDataAdapter = getPostDetailDataAdapter;
   }
 
@@ -31,3 +31,5 @@ export default class GetPostDetailUseCase implements UseCase<GetPostDetailReques
   }
 
 }
+
+export default GetPostDetailUseCase;

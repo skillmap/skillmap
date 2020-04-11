@@ -1,13 +1,13 @@
-import InMemoryDatabase from "data/InMemoryDB";
+import PostInMemoryEntityGateway from "data/post/PostInMemoryEntityGateway";
 
 import SamplePosts from "__fixtures__/Posts";
 import SampleSkills from "__fixtures__/Skills";
 import samplePostDetails from "__fixtures__/PostDetails";
 
-let inMemoryDB: InMemoryDatabase;
+let inMemoryDB: PostInMemoryEntityGateway;
 
 beforeAll(() => {
-  inMemoryDB = new InMemoryDatabase();
+  inMemoryDB = new PostInMemoryEntityGateway();
   inMemoryDB.setPosts(SamplePosts);
   inMemoryDB.setSkills(SampleSkills);
 });

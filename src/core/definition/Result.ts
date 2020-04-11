@@ -1,4 +1,4 @@
-export default class Result<T> {
+class Result<T> {
 
     private value?: T;
     private error?: T;
@@ -37,3 +37,5 @@ export default class Result<T> {
       return new Result<T>(undefined, result);
     }
 }
+
+export default Result;

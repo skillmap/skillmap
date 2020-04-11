@@ -1,18 +1,18 @@
 import UseCase from "core/definition/UseCase";
-import { GetRecentPostRequestDTO } from "core/usecases/post/getRecentPosts/GetRecentPostsRequestDTO";
-import { GetRecentPostsResponseDTO } from "core/usecases/post/getRecentPosts/GetRecentPostsResponseDTO";
+import GetRecentPostRequestDTO from "core/usecases/post/getRecentPosts/GetRecentPostsRequestDTO";
+import GetRecentPostsResponseDTO from "core/usecases/post/getRecentPosts/GetRecentPostsResponseDTO";
 import { Post, PaginatedData } from "core/entities";
 import Result from "core/definition/Result";
-import PostDataAdapter from "core/usecases/post/PostDataAdapter";
+import PostEntityGateway from "core/usecases/post/PostEntityGateway";
 import { GetRecentPostInvalidRequest as GetRecentPostInvalidRequest, NextPageNotFound } from "core/usecases/post/getRecentPosts/GetRecentPostsErrors";
 
 const PAGE_SEEK_COUNT = 10;
 
-export default class GetRecentPostsUseCase implements UseCase<GetRecentPostRequestDTO, GetRecentPostsResponseDTO>{
+class GetRecentPostsUseCase implements UseCase<GetRecentPostRequestDTO, GetRecentPostsResponseDTO>{
 
-  private getRecentPostsDataAdapter: PostDataAdapter;
+  private getRecentPostsDataAdapter: PostEntityGateway;
 
-  constructor(getRecentPostsDataAdapter: PostDataAdapter) {
+  constructor(getRecentPostsDataAdapter: PostEntityGateway) {
     this.getRecentPostsDataAdapter = getRecentPostsDataAdapter;
   }
 
@@ -32,3 +32,5 @@ export default class GetRecentPostsUseCase implements UseCase<GetRecentPostReque
   }
 
 }
+
+export default GetRecentPostsUseCase;

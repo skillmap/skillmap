@@ -1,12 +1,9 @@
-import { Skill } from ".";
 
-export interface Post {
-    postId: string;
-    description: string;
-    title: string;
-    publishDate: number;
+interface Post {
+  postId: string;
+  description: string;
+  title: string;
+  publishDate: number;
 }
 
-export interface PostDetail extends Post {
-    skills: Skill[];
-}
+export default Post;

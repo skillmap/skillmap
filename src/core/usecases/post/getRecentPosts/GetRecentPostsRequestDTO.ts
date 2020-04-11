@@ -1,4 +1,6 @@
 
-export interface GetRecentPostRequestDTO {
+ interface GetRecentPostRequestDTO {
     pageKey: number;
 }
+
+export default GetRecentPostRequestDTO;

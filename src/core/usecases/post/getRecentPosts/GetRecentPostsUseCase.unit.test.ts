@@ -1,15 +1,15 @@
-import PostDataAdapter from "core/usecases/post/PostDataAdapter";
+import PostEntityGateway from "core/usecases/post/PostEntityGateway";
 import { Post, PostDetail, PaginatedData } from "core/entities";
 import SamplePaginatedPosts from "__fixtures__/PaginatedPosts";
 import SamplePostDetails from "__fixtures__/PostDetails";
 import GetRecentPostsUseCase from "core/usecases/post/getRecentPosts/GetRecentPostsUseCase";
-import { GetRecentPostRequestDTO } from "core/usecases/post/getRecentPosts/GetRecentPostsRequestDTO";
+import GetRecentPostRequestDTO from "core/usecases/post/getRecentPosts/GetRecentPostsRequestDTO";
 import { GetRecentPostInvalidRequest, NextPageNotFound } from "core/usecases/post/getRecentPosts/GetRecentPostsErrors";
 let getRecentPostsUseCase: GetRecentPostsUseCase;
 
 beforeAll(() => {
 
-  const dataSource: PostDataAdapter = {
+  const dataSource: PostEntityGateway = {
     getRecentPosts: (key: number): PaginatedData<Post, number> | undefined => SamplePaginatedPosts.find(item => item.pageInfo.currentPageKey === key),
     getPostDetail: (postId: string): PostDetail | undefined => SamplePostDetails.find(p => p.postId == postId)
   };

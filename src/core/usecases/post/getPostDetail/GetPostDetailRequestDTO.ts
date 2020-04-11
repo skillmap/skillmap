@@ -1,4 +1,6 @@
 
-export interface GetPostDetailRequestDTO {
-    postId: string;
+interface GetPostDetailRequestDTO {
+  postId: string;
 }
+
+export default GetPostDetailRequestDTO ;

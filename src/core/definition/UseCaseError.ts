@@ -1,6 +1,5 @@
 
-
-export default class UseCaseError {
+class UseCaseError {
     public message: string;
 
     constructor(message: string) {
@@ -11,3 +10,5 @@ export default class UseCaseError {
       return this.constructor.name.toUpperCase();
     }
 }
+
+export default UseCaseError;

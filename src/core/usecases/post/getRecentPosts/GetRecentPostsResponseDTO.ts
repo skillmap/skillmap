@@ -5,4 +5,6 @@ import {
   NextPageNotFound
 } from "core/usecases/post/getRecentPosts/GetRecentPostsErrors";
 
-export type GetRecentPostsResponseDTO = Result<PaginatedData<Post, number> | GetRecentPostInvalidRequest | NextPageNotFound>;
+type GetRecentPostsResponseDTO = Result<PaginatedData<Post, number> | GetRecentPostInvalidRequest | NextPageNotFound>;
+
+export default GetRecentPostsResponseDTO;

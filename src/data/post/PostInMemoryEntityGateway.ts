@@ -1,9 +1,9 @@
-import PostDataAdapter from "core/usecases/post/PostDataAdapter";
+import PostEntityGateway from "core/usecases/post/PostEntityGateway";
 import { PaginatedData, Post, PostDetail, Skill } from "core/entities";
 
 
 
-class InMemoryDatabase implements PostDataAdapter {
+class PostInMemoryEntityGateway implements PostEntityGateway {
 
   #posts: Post[];
   #skills: Skill[];
@@ -75,4 +75,4 @@ class InMemoryDatabase implements PostDataAdapter {
 
 }
 
-export default InMemoryDatabase;
+export default PostInMemoryEntityGateway;
