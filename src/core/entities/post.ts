@@ -4,7 +4,7 @@ export interface Post {
     postId: string;
     description: string;
     title: string;
-    publishDate: Date;
+    publishDate: number;
 }
 
 export interface PostDetail extends Post {
