@@ -1,14 +1,14 @@
 import UseCase from "core/definition/UseCase";
-import GetRecentPostRequestDTO from "core/usecases/post/getRecentPosts/GetRecentPostsRequestDTO";
+import GetRecentPostsRequestDTO from "core/usecases/post/getRecentPosts/GetRecentPostsRequestDTO";
 import GetRecentPostsResponseDTO from "core/usecases/post/getRecentPosts/GetRecentPostsResponseDTO";
 import { Post, PaginatedData } from "core/entities";
 import Result from "core/definition/Result";
 import PostEntityGateway from "core/usecases/post/PostEntityGateway";
-import { GetRecentPostInvalidRequest as GetRecentPostInvalidRequest, NextPageNotFound } from "core/usecases/post/getRecentPosts/GetRecentPostsErrors";
+import { GetRecentPostsInvalidRequest as GetRecentPostsInvalidRequest, NextPageNotFound } from "core/usecases/post/getRecentPosts/GetRecentPostsErrors";
 
 const PAGE_SEEK_COUNT = 10;
 
-class GetRecentPostsUseCase implements UseCase<GetRecentPostRequestDTO, GetRecentPostsResponseDTO>{
+class GetRecentPostsUseCase implements UseCase<GetRecentPostsRequestDTO, GetRecentPostsResponseDTO>{
 
   private getRecentPostsDataAdapter: PostEntityGateway;
 
@@ -16,10 +16,10 @@ class GetRecentPostsUseCase implements UseCase<GetRecentPostRequestDTO, GetRecen
     this.getRecentPostsDataAdapter = getRecentPostsDataAdapter;
   }
 
-  execute(request: GetRecentPostRequestDTO): GetRecentPostsResponseDTO | Promise<GetRecentPostsResponseDTO> {
+  execute(request: GetRecentPostsRequestDTO): GetRecentPostsResponseDTO | Promise<GetRecentPostsResponseDTO> {
 
     if (!request || !request.pageKey) {
-      return Result.fail(new GetRecentPostInvalidRequest(request));
+      return Result.fail(new GetRecentPostsInvalidRequest(request));
     }
 
     const posts = this.getRecentPostsDataAdapter.getRecentPosts(request.pageKey, PAGE_SEEK_COUNT);

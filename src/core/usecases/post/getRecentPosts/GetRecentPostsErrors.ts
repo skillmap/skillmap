@@ -9,7 +9,7 @@ export class NextPageNotFound extends UseCaseError {
 
 }
 
-export class GetRecentPostInvalidRequest extends UseCaseError {
+export class GetRecentPostsInvalidRequest extends UseCaseError {
 
   constructor(requestPayload: unknown) {
     super(`request '${JSON.stringify(requestPayload)}' is not valid`);

@@ -3,8 +3,8 @@ import { Post, PostDetail, PaginatedData } from "core/entities";
 import SamplePaginatedPosts from "__fixtures__/PaginatedPosts";
 import SamplePostDetails from "__fixtures__/PostDetails";
 import GetRecentPostsUseCase from "core/usecases/post/getRecentPosts/GetRecentPostsUseCase";
-import GetRecentPostRequestDTO from "core/usecases/post/getRecentPosts/GetRecentPostsRequestDTO";
-import { GetRecentPostInvalidRequest, NextPageNotFound } from "core/usecases/post/getRecentPosts/GetRecentPostsErrors";
+import GetRecentPostsRequestDTO from "core/usecases/post/getRecentPosts/GetRecentPostsRequestDTO";
+import { GetRecentPostsInvalidRequest, NextPageNotFound } from "core/usecases/post/getRecentPosts/GetRecentPostsErrors";
 let getRecentPostsUseCase: GetRecentPostsUseCase;
 
 beforeAll(() => {
@@ -24,12 +24,12 @@ describe("get recent post usecase", () => {
   it("invalid request", async () => {
 
     const invalidInput: unknown = {};
-    const result = await getRecentPostsUseCase.execute(invalidInput as GetRecentPostRequestDTO);
+    const result = await getRecentPostsUseCase.execute(invalidInput as GetRecentPostsRequestDTO);
 
-    expect(result.getError()).toBeInstanceOf(GetRecentPostInvalidRequest);
+    expect(result.getError()).toBeInstanceOf(GetRecentPostsInvalidRequest);
 
-    expect((result.getError() as GetRecentPostInvalidRequest).message).toEqual("request '{}' is not valid");
-    expect((result.getError() as GetRecentPostInvalidRequest).getErrorType()).toEqual("GETRECENTPOSTINVALIDREQUEST");
+    expect((result.getError() as GetRecentPostsInvalidRequest).message).toEqual("request '{}' is not valid");
+    expect((result.getError() as GetRecentPostsInvalidRequest).getErrorType()).toEqual("GETRECENTPOSTSINVALIDREQUEST");
   });
 
 
@@ -46,7 +46,7 @@ describe("get recent post usecase", () => {
 
   it("on error, result.getValue() throws error", async () => {
     const invalidInput: unknown = { postId: "-1" };
-    const result = await getRecentPostsUseCase.execute(invalidInput as GetRecentPostRequestDTO);
+    const result = await getRecentPostsUseCase.execute(invalidInput as GetRecentPostsRequestDTO);
 
     expect(() => {
       result.getValue();
@@ -55,12 +55,12 @@ describe("get recent post usecase", () => {
 
   it("traverse pages", async () => {
 
-    const request: GetRecentPostRequestDTO = { pageKey: 1 };
+    const request: GetRecentPostsRequestDTO = { pageKey: 1 };
     const result = await getRecentPostsUseCase.execute(request);
 
     expect((result.getValue() as PaginatedData<Post, number>).pageInfo).toEqual({ nextPageKey: 2, currentPageKey: 1, count: 3 });
 
-    const nextPageRequest: GetRecentPostRequestDTO = {
+    const nextPageRequest: GetRecentPostsRequestDTO = {
       pageKey: (result.getValue() as PaginatedData<Post, number>).pageInfo.nextPageKey
     };
     const nextPageResult = await getRecentPostsUseCase.execute(nextPageRequest);

@@ -1,6 +1,6 @@
 
- interface GetRecentPostRequestDTO {
+ interface GetRecentPostsRequestDTO {
     pageKey: number;
 }
 
-export default GetRecentPostRequestDTO;
+export default GetRecentPostsRequestDTO;
